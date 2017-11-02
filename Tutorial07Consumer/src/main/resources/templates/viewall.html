@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/fragment :: head">
+<title id="pageTitle">View All Students</title>
+</head>
+<body>
+	<div th:replace="fragments/fragment :: header"></div>
+	<div class="container">
+	<h1>All Students</h1>
+	
+	<a href="/student/add" class="btn btn-primary">Tambah Mahasiswa</a>
+	<br/><br/>
+	<table id="students" class="display">
+		<thead>
+			<tr>
+				<th>No.</th>
+				<th>NPM</th>
+				<th>Name</th>
+				<th>GPA</th>
+				<th>Cum Laude</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="student,iterationStatus: ${students}">
+				<td th:text="${iterationStatus.count}">No. 1</td>
+				<td th:text="${student.npm}">Student NPM</td>
+				<td th:text="${student.name}">Student Name</td>
+				<td th:text="${student.gpa}">Student GPA</td>
+				<td th:text="${student.gpa>=3.49}?'Cum Laude!':'Sangat Memuaskan!'">Cum Laude</td>
+				<td>
+					<div class="btn-group">
+						<a th:href="'/student/update/' +${student.npm}" class="btn btn-info">Update Data</a>
+						<a th:href="'/student/delete/' +${student.npm}" class="btn btn-danger">Delete Data</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	</div>
+	<div th:replace="fragments/fragment :: footer"></div>
+
+	<!-- 
+	<div th:each="student,iterationStatus: ${students}">
+		<h3 th:text="'No. ' + ${iterationStatus.count}">No. 1</h3>
+		<h3 th:text="'NPM = ' + ${student.npm}">Student NPM</h3>
+		<h3 th:text="'Name = ' + ${student.name}">Student Name</h3>
+		<h3 th:text="'GPA = ' + ${student.gpa}">Student GPA</h3>
+		<h3 th:if="${student.gpa>=3.49}">Cum Laude!</h3>
+		<h3 th:unless="${student.gpa>=3.49}">Sangat Memuaskan!</h3>
+		-->
+		<!-- <h3 th:text="${student.gpa>=3.49}?'Cum Laude!':'Sangat Memuaskan!'"></h3>  -->
+		<!-- 
+		<a th:href="'/student/delete/' +${student.npm}">Delete Data</a><br />
+		<a th:href="'/student/update/' +${student.npm}">Update Data</a><br />
+
+
+		<h3>Kuliah yang diambil</h3>
+		<ul th:each="course,iterationStatus: ${student.courses}">
+			<li th:text="${course.name} + '-' + ${course.credits} + ' sks'">
+				Nama kuliah-X SKS</li>
+		</ul>
+		<hr />
+	</div> -->
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+	    		$('#students').DataTable();
+		} );
+	</script>
+</body>
+</html>
