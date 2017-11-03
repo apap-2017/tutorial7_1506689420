@@ -13,13 +13,6 @@ import com.example.model.StudentModel;
 public class StudentDAOImpl implements StudentDAO {
 	@Autowired
 	private RestTemplate restTemplate;
-	
-	// create new bean for restTemplate
-	// https://stackoverflow.com/questions/28024942/how-to-autowire-resttemplate-using-annotations
-	@Bean
-	public RestTemplate restTemplate() {
-	    return new RestTemplate();
-	}
 
 	@Override
 	public StudentModel selectStudent(String npm) {
@@ -30,6 +23,8 @@ public class StudentDAOImpl implements StudentDAO {
 
 	@Override
 	public List<StudentModel> selectAllStudents() {
-		return null;
+		List<StudentModel> students = restTemplate.getForObject("http://localhost:8080/rest/student/viewall",
+				List.class);
+		return students;
 	}
 }
